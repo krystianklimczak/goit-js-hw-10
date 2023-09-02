@@ -1,0 +1,54 @@
+.hidden {
+  display: none;
+}
+body {
+  margin: 15px auto;
+  max-width: 1280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.breed-select {
+  max-width: 200px;
+  margin: 15px auto;
+}
+
+.cat-info {
+  max-width: 400px;
+  margin: 15px auto;
+}
+
+.error {
+  max-width: 400px;
+  color: red;
+  margin: 15px auto;
+}
+
+.loader {
+  max-width: 400px;
+  color: green;
+  margin: 15px auto;
+}
+
+.loaderr {
+  width: 48px;
+  height: 48px;
+  border: 5px solid green;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.cat-info__temperament--bold {
+  font-weight: bold;
+}
