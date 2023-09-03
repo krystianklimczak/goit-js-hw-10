@@ -11,13 +11,13 @@ axios.defaults.headers.common['x-api-key'] =
 // variables
 export const breedSelect = document.querySelector('.breed-select');
 export const catInfo = document.querySelector('.cat-info');
-const loaderLog = document.querySelector('.loader');
-const loaderrLog = document.querySelector('.loaderr');
+export const loaderLog = document.querySelector('.loader');
+export const loaderrLog = document.querySelector('.loaderr');
 // export const errorLog = document.querySelector('.error');
 
 // body
 
-function addCatsToSelectOptions(data) {
+export function addCatsToSelectOptions(data) {
   if (!data) {
     throw new Error(error);
   }
@@ -30,7 +30,7 @@ function addCatsToSelectOptions(data) {
   });
   breedSelect.append(...catsArray);
 }
-function addCatToHtml(data) {
+export function addCatToHtml(data) {
   const selectedCatInfo = {
     name: data[0].breeds[0].name,
     description: data[0].breeds[0].description,
@@ -65,34 +65,80 @@ function addCatToHtml(data) {
   catInfo.append(...Elements);
 }
 
-export function fetchBreeds() {
-  breedSelect.classList.add('hidden');
-  axios
+export function newFetchBreeds() {
+  return axios
     .get('https://api.thecatapi.com/v1/breeds')
     .then(response => response.data)
-    .then(data => {
-      addCatsToSelectOptions(data);
-      breedSelect.classList.remove('hidden');
-    })
     .catch(error => {
-      //   console.log(error);
       Notiflix.Notify.failure(
         'Oops! Something went wrong! Try reloading the page!'
       );
-      breedSelect.classList.add('hidden');
-      loaderLog.classList.add('hidden');
-      loaderrLog.classList.add('hidden');
-      //   errorLog.classList.remove('hidden');
-    })
-    .finally(() => {
-      //   console.log('downloading cats from api finished');
-      loaderLog.classList.add('hidden');
-      loaderrLog.classList.add('hidden');
-      new SlimSelect({
-        select: '#selectElement',
-      });
     });
 }
+
+// export function fetchBreeds() {
+//   breedSelect.classList.add('hidden');
+//   axios
+//     .get('https://api.thecatapi.com/v1/breeds')
+//     .then(response => response.data)
+//     .then(data => {
+//       addCatsToSelectOptions(data);
+//       breedSelect.classList.remove('hidden');
+//     })
+//     .catch(error => {
+//       //   console.log(error);
+//       Notiflix.Notify.failure(
+//         'Oops! Something went wrong! Try reloading the page!'
+//       );
+//       breedSelect.classList.add('hidden');
+//       loaderLog.classList.add('hidden');
+//       loaderrLog.classList.add('hidden');
+//       //   errorLog.classList.remove('hidden');
+//     })
+//     .finally(() => {
+//       //   console.log('downloading cats from api finished');
+//       loaderLog.classList.add('hidden');
+//       loaderrLog.classList.add('hidden');
+//       new SlimSelect({
+//         select: '#selectElement',
+//       });
+//     });
+// }
+
+function newFetchCatByBreed(breedId) {
+  return axios
+    .get(
+      `https://api.thecatapi.com/v1/images/search?breed_ids=${breedId.currentTarget.value}`
+    )
+    .then(response => response.data)
+    .catch(error => {
+      Notiflix.Notify.failure(
+        'Oops! Something went wrong! Try reloading the page!'
+      );
+    });
+}
+
+export function addSelectedCatToHtml(e) {
+  loaderLog.classList.remove('hidden');
+  loaderrLog.classList.remove('hidden');
+  catInfo.classList.add('hidden');
+  newFetchCatByBreed(e)
+    .then(data => addCatToHtml(data))
+    .catch(error => {
+      Notiflix.Notify.failure(
+        'Oops! Something went wrong! Try reloading the page!'
+      );
+      loaderLog.classList.add('hidden');
+      loaderrLog.classList.add('hidden');
+    })
+    .finally(() => {
+      //   console.log('selected cat appear');
+      loaderLog.classList.add('hidden');
+      loaderrLog.classList.add('hidden');
+      catInfo.classList.remove('hidden');
+    });
+}
+
 export function fetchCatByBreed(breedId) {
   loaderLog.classList.remove('hidden');
   loaderrLog.classList.remove('hidden');
