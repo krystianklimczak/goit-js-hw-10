@@ -1,7 +1,5 @@
 // imports
 import axios from 'axios';
-import SlimSelect from 'slim-select';
-import 'slim-select/dist/slimselect.css';
 import Notiflix from 'notiflix';
 
 // private api key value
@@ -139,30 +137,30 @@ export function addSelectedCatToHtml(e) {
     });
 }
 
-export function fetchCatByBreed(breedId) {
-  loaderLog.classList.remove('hidden');
-  loaderrLog.classList.remove('hidden');
-  //   errorLog.classList.add('hidden');
-  catInfo.classList.add('hidden');
-  axios
-    .get(
-      `https://api.thecatapi.com/v1/images/search?breed_ids=${breedId.currentTarget.value}`
-    )
-    .then(response => response.data)
-    .then(data => addCatToHtml(data))
-    .catch(error => {
-      //   console.log(error);
-      Notiflix.Notify.failure(
-        'Oops! Something went wrong! Try reloading the page!'
-      );
-      loaderLog.classList.add('hidden');
-      loaderrLog.classList.add('hidden');
-      //   errorLog.classList.remove('hidden');
-    })
-    .finally(() => {
-      //   console.log('selected cat appear');
-      loaderLog.classList.add('hidden');
-      loaderrLog.classList.add('hidden');
-      catInfo.classList.remove('hidden');
-    });
-}
+// export function fetchCatByBreed(breedId) {
+//   loaderLog.classList.remove('hidden');
+//   loaderrLog.classList.remove('hidden');
+//   //   errorLog.classList.add('hidden');
+//   catInfo.classList.add('hidden');
+//   axios
+//     .get(
+//       `https://api.thecatapi.com/v1/images/search?breed_ids=${breedId.currentTarget.value}`
+//     )
+//     .then(response => response.data)
+//     .then(data => addCatToHtml(data))
+//     .catch(error => {
+//       //   console.log(error);
+//       Notiflix.Notify.failure(
+//         'Oops! Something went wrong! Try reloading the page!'
+//       );
+//       loaderLog.classList.add('hidden');
+//       loaderrLog.classList.add('hidden');
+//       //   errorLog.classList.remove('hidden');
+//     })
+//     .finally(() => {
+//       //   console.log('selected cat appear');
+//       loaderLog.classList.add('hidden');
+//       loaderrLog.classList.add('hidden');
+//       catInfo.classList.remove('hidden');
+//     });
+// }
